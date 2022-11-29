@@ -1,5 +1,10 @@
+
+# workdic <- "~/Github/Aggregated-Hawkes-Processes/"
+workdic <- ""   # change it if needed
+
+
 # --------------------read result files for temporal simulations--------
-load("~/Github/Aggregated-Hawkes-Processes/result/Simulation/MCEM.dat")
+load(paste0(workdic,"result/Simulation/MCEM.dat"))
 
 for (agg in c(0,50,75,100,125,150)) {
   tmp <- read.sum(truevalue = c(0.3,0.7,1),start=1,end=400,prefix = paste0("~/Simulation/Output/1_sims/mu03/alpha07/beta1/agg",agg,"/Results/temporal_"))
@@ -60,7 +65,7 @@ t_df2$parameter <- factor(t_df2$parameter,levels = c("mu","alpha","beta"))
 # make a dataframe for all temporal simulation
 t_df <- rbind.data.frame(t_df1,t_df2)
 # save the dataframe
-save(t_df, file = "~/Github/Aggregated-Hawkes-Processes/result/Simulation/temporal.dat")
+save(t_df, file = paste0(workdic,"result/Simulation/temporal.dat"))
 
 
 
@@ -139,7 +144,7 @@ st_df2$sagg <- factor(st_df2$sagg/100, levels = c("0","0.5","1","1.5"))
 st_df2$par_set <- "2"
 
 st_df <- rbind.data.frame(st_df1,st_df2)
-save(st_df, file = "~/Github/Aggregated-Hawkes-Processes/result/Simulation/spatio_temporal.dat")
+save(st_df, file = paste0(workdic,"result/Simulation/spatio_temporal.dat"))
 
 
 
@@ -181,7 +186,7 @@ st2_df$parameter <- factor(st2_df$parameter,levels = c("mu[1]","mu[2]","alpha[11
 st2_df$agg1 <- factor(st2_df$agg1/100, levels = c("0","0.75","1"))
 st2_df$agg2 <- factor(st2_df$agg2/100, levels = c("0","0.75","1"))
 
-save(st2_df, file = "~/Github/Aggregated-Hawkes-Processes/result/Simulation/multi_spatio_temporal.dat")
+save(st2_df, file = paste0(workdic,"result/Simulation/multi_spatio_temporal.dat"))
 
 
 

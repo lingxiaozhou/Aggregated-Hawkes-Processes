@@ -1,14 +1,15 @@
 library(coda)
 library(truncnorm)
 
-# the full name of the code folder
-funcdict <- "~/Github/Aggregated-Hawkes-Processes/code/"
 
-source(paste0(funcdict,"MCMC_st.R"))
-source(paste0(funcdict,"MCMC_t.R"))
-source(paste0(funcdict,"update_simulation.R"))
-source(paste0(funcdict,"aggregation.R"))
-source(paste0(funcdict,"initializelabel.R"))
-source(paste0(funcdict,"generateHP.R"))
-source(paste0(funcdict,"MCMC_st.R"))
-source(paste0(funcdict,"combineMCMC.R"))
+# workdic <- "~/Github/Aggregated-Hawkes-Processes/"
+workdic <- ""    # change if necessary
+
+source(paste0(workdic,"code/MCMC_st.R"))
+source(paste0(workdic,"code/MCMC_t.R"))
+source(paste0(workdic,"code/update_simulation.R"))
+source(paste0(workdic,"code/aggregation.R"))
+source(paste0(workdic,"code/initializelabel.R"))
+source(paste0(workdic,"code/generateHP.R"))
+source(paste0(workdic,"code/MCMC_st.R"))
+source(paste0(workdic,"code/combineMCMC.R"))

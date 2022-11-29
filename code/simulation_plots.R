@@ -1,7 +1,11 @@
 library(ggplot2)
-load("~/Github/Aggregated-Hawkes-Processes/result/Simulation/temporal.dat")
-load("~/Github/Aggregated-Hawkes-Processes/result/Simulation/spatio_temporal.dat")
-load("~/Github/Aggregated-Hawkes-Processes/result/Simulation/multi_spatio_temporal.dat")
+
+# workdic <- "~/Github/Aggregated-Hawkes-Processes/"
+workdic <- ""   #change if needed
+
+load(paste0(workdic,"result/Simulation/temporal.dat"))
+load(paste0(workdic,"result/Simulation/spatio_temporal.dat"))
+load(paste0(workdic,"result/Simulation/multi_spatio_temporal.dat"))
 
 #--------------Figure A1(a)---------------------------------
 
