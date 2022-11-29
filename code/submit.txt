@@ -1,0 +1,82 @@
+# temporal case
+sim=1
+
+
+# mu = 0.3 alpha = 0.7
+for agg in '0' '50' '75' '100' '125' '150'; do
+    for mu in '3'; do
+        for alpha in '7'; do
+
+            echo ${agg}${mu}${alpha}
+            sbatch --job-name=sim1_${agg}${mu}${alpha} --export=agg=${agg},mu=${mu},alpha=${alpha} --output=Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta1/agg${agg}/Out_files/output_%a.out 12_sim.sh
+            sleep 1
+            
+        done
+    done
+done
+
+# mu = 0.5 alpha = 0.5
+for agg in '0' '50' '75' '100' '125' '150'; do
+    for mu in '5'; do
+        for alpha in '5'; do
+
+            echo ${agg}${mu}${alpha}
+            sbatch --job-name=sim1_${agg}${mu}${alpha} --export=agg=${agg},mu=${mu},alpha=${alpha} --output=Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta1/agg${agg}/Out_files/output_%a.out 12_sim.sh
+            sleep 1
+            
+        done
+    done
+done
+
+
+
+
+# spatio-temporal case
+sim=2
+
+# mu = 0.3 alpha = 0.7 beta=1 gamma=1
+for tagg in '0' '50' '100' '150'; do
+    for sagg in '0' '50' '100' '150'; do
+        mu=3
+        alpha=7
+        
+        echo ${tagg}${sagg}${mu}
+        sbatch --job-name=sim2_${tagg}${sagg}${mu} --export=tagg=${tagg},sagg=${sagg},mu=${mu},alpha=${alpha} --output=Output/${sim}_sims/mu03/alpha07/beta1/tagg${tagg}/sagg${sagg}/Out_files/output_%a.out 22_sim.sh
+        sleep 1
+            
+    done
+done
+
+
+
+# mu = 0.5 alpha = 0.5 beta=1 gamma=1
+for tagg in '0' '50' '100' '150'; do
+    for sagg in '0' '50' '100' '150'; do
+        mu=5
+        alpha=5
+        
+        echo ${tagg}${sagg}${mu}
+        sbatch --job-name=sim2_${tagg}${sagg} --export=tagg=${tagg},sagg=${sagg},mu=${mu},alpha=${alpha} --output=Output/${sim}_sims/mu05/alpha05/beta1/tagg${tagg}/sagg${sagg}/Out_files/output_%a.out 22_sim.sh
+        sleep 1
+            
+    done
+done
+
+
+
+
+# multiple spatio-temporal case
+sim=3
+
+
+
+
+for agg2 in '150'; do
+    for agg1 in '150'; do
+        
+        echo ${agg1}${agg2}
+        sbatch --job-name=3_${agg1}${agg2} --export=agg1=${agg1},agg2=${agg2} --output=Output/${sim}_sims/1_agg${agg1}/2_agg${agg2}/Out_files/output_%a.out 32_sim.sh
+        sleep 1
+            
+    done
+done

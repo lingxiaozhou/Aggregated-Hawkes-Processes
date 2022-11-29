@@ -1,0 +1,77 @@
+# Creating the folder for the data specifications and the generated data:
+
+
+
+mkdir -p Data_specs/mu03/alpha07/beta1
+mkdir -p Data_specs/mu05/alpha05/beta1
+        
+
+for tagg in '0' '50' '75' '100' '125'; do
+    for sagg in '0' '50' '75' '100' '125'; do
+
+    mkdir -p Data_specs/mu03/alpha07/beta1/tagg${tagg}/sagg${sagg}
+    
+    done
+done
+
+
+for agg1 in '0' '75' '100'; do
+    for agg2 in '0' '75' '100'; do
+
+    mkdir -p Data_specs/1_agg${agg1}/2_agg${agg2}
+    
+    done
+done
+
+
+# Creating the folder where the results will be saved.
+#
+# temporal case
+sim=1
+
+for agg in '0' '50' '75' '100' '125' '150'; do
+    mu=3
+    alpha=7
+    beta=1
+    mkdir -p Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta${beta}/agg${agg}/Out_files
+    mkdir -p Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta${beta}/agg${agg}/Results
+        
+done
+
+for agg in '0' '50' '75' '100' '125' '150'; do
+    mu=5
+    alpha=5
+    beta=1
+    mkdir -p Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta${beta}/agg${agg}/Out_files
+    mkdir -p Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta${beta}/agg${agg}/Results
+        
+done
+
+
+# spatio-temporal case
+sim=2
+
+
+for tagg in '0' '50' '75' '100' '125' '150'; do
+    for sagg in '0' '50' '75' '100' '125' '150'; do
+    
+    mu=3
+    alpha=7
+    mkdir -p Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta1/tagg${tagg}/sagg${sagg}/Out_files
+    mkdir -p Output/${sim}_sims/mu0${mu}/alpha0${alpha}/beta1/tagg${tagg}/sagg${sagg}/Results
+    
+    done    
+done
+
+# multiple spatio-temporal case
+sim=3
+
+
+for agg1 in '0' '50' '75' '100' '150'; do
+    for agg2 in '0' '50' '75' '100' '150'; do
+    
+    mkdir -p Output/${sim}_sims/1_agg${agg1}/2_agg${agg2}/Out_files
+    mkdir -p Output/${sim}_sims/1_agg${agg1}/2_agg${agg2}/Results
+    
+    done    
+done
