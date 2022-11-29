@@ -79,11 +79,15 @@ updatelabel_st <- function(time,portion,mu,alpha,beta,gamma,g,type,x,y,q,use_q,u
 #---------------------------------update time-----------------------------------------------------------
 # Update time for aggregated HP
 updatetime <- function(time,ll,alpha,beta,g,type,bin.length,t,dim){
+  if(length(bin.length)==1){
+    bin.length <- rep(bin.length,length(ll))
+  }
+  
   # Update ith time
   for(i in 1:length(time)){
     Oi <- which(g==i)
     betai <- beta[type[i],type[Oi]]
-    upper <- ifelse(is.na(Oi[1]),ll[i]+bin.length,min(ll[i]+bin.length,time[which(g==i)]))
+    upper <- ifelse(is.na(Oi[1]),min(ll[i]+bin.length[i],t),min(ll[i]+bin.length[i],time[which(g==i)]))
     lower <- ifelse(g[i]==0,ll[i],max(ll[i],time[g[i]]))
     tc <- runif(1, lower,upper)
     
@@ -122,15 +126,29 @@ updatetime <- function(time,ll,alpha,beta,g,type,bin.length,t,dim){
 
 
 #---------------------------------update position-------------------------------------
-updatepos <- function(x,y,ll.x,ll.y,gamma,g,type,bin.length.x,bin.length.y,t){
+updatepos <- function(x,y,ll.x,ll.y,gamma,g,type,bin.length.x,bin.length.y,t,w.width,w.length){
   
-  for(i in 1:length(time)){
+  if(length(bin.length.x)==1){
+    bin.length.x <- rep(bin.length.x,length(ll.x))
+  }
+  
+  if(length(bin.length.y)==1){
+    bin.length.y <- rep(bin.length.y,length(ll.y))
+  }
+  
+  
+  for(i in 1:length(x)){
     Oi <- which(g==i)
     pai <- g[i]
     gammai <- gamma[type[i],type[Oi]]
     
-    x.c <- runif(1,ll.x[i],ll.x[i]+bin.length.x)
-    y.c <- runif(1,ll.y[i],ll.y[i]+bin.length.y)
+    x.c <- runif(1,ll.x[i],min(ll.x[i]+bin.length.x[i],w.width))
+    y.c <- runif(1,ll.y[i],min(ll.y[i]+bin.length.y[i],w.length))
+    if(is.na(x.c)){
+      print(i)
+      print(ll.x[i])
+      print(min(ll.x[i]+bin.length.x[i],w.width))
+    }
     
     
     D9 <- 0

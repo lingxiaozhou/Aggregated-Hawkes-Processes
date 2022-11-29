@@ -40,21 +40,20 @@
 
 #Output:
 #   A dataframe containing the posterior samples of all parameters.
-                    
 MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
                     seed = 1234,Total_itr=10000,burn = 3000,
-                    q=0.9998,use_q=TRUE,updatelabel_ll=0,portion=1,t=200,bin.length=0.1,bin.length.x=0.1,bin.length.y=0.1,
-                    mu=rep(1,2),alpha=array(1,c(2,2)),beta=array(1,c(2,2)),gamma=array(1,c(2,2)),
+                    q=0.998,use_q=TRUE,updatelabel_ll=0,portion=1,t=200,bin.length=0.1,bin.length.x=0.1,bin.length.y=0.1,
+                    mu=rep(1,2),alpha=array(1,c(2,2)),beta=array(1,c(2,2)),gamma=array(1,c(2,2)), label_0=c(),time_0=c(),x_0=c(),y_0=c(),
                     e_beta=array(8,c(2,2)),silent=FALSE,summ_itr=1000, save.latent = FALSE,
                     update.beta=TRUE,update.alpha=TRUE,update.mu=TRUE,update.gamma=TRUE,update.time=TRUE,update.pos=TRUE,update.label=TRUE){
   if(seed!=0){
     set.seed(seed)
   }
   
-  if(bin.length == 0){
+  if(all(bin.length == 0)){
     update.time=FALSE
   }
-  if(bin.length.x == 0 | bin.length.y==0){
+  if(all(bin.length.x == 0) | all(bin.length.y==0)){
     update.pos=FALSE
   }
   
@@ -64,7 +63,10 @@ MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
   #-------------------------initialization--------------------------------------
   if(update.time==TRUE){
     ll <- agg(time.true,bin.length)
-    time <- generateST(ll,bin.length)
+    time <- time_0
+    if(length(time_0)==0){
+      time <- generateST(ll,bin.length,c(0,t))
+    }
   }
   if(update.time==FALSE){
     time <- time.true
@@ -75,8 +77,17 @@ MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
   if(update.pos==TRUE){
     ll.x <- agg(x.true,bin.length.x)
     ll.y <- agg(y.true,bin.length.y)
-    x <- generateST(ll.x,bin.length.x)
-    y <- generateST(ll.y,bin.length.y)
+    
+    if(length(x_0)==0){
+      x <- generateST(ll.x,bin.length.x,c(0,w.width))
+    }else{
+      x <- x_0
+    }
+    if(length(y_0)==0){
+      y <- generateST(ll.y,bin.length.y,c(0,w.length))
+    }else{
+      y <- y_0
+    }
 
     # x <- x[order(time)]
     # y <- y[order(time)]
@@ -90,7 +101,10 @@ MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
   # time <- time[order(time)]
   
   if(update.label==TRUE){
-    g <- initializeg3(time,10)
+    g <- label_0
+    if(length(label_0)==0){
+      g <- initializeg3(time,10)
+    }
   }
   if(update.label==FALSE){
     g <- label.true
@@ -193,7 +207,7 @@ MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
           Ojl <- Ol[type[g[Ol]]==j]
           
           gamma[j,l] <- sqrt(1/rgamma(1,0.001+length(Ojl),0.001+1/2*(sum((x[Ojl]-x[g[Ojl]])^2+(y[Ojl]-y[g[Ojl]])^2))))
-          
+
         }
         
         
@@ -220,7 +234,7 @@ MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
     
     #-------------------------------update position---------------------------------------------------
     if(update.pos == TRUE){
-      tmp <- updatepos(x,y,ll.x,ll.y,gamma,g,type,bin.length.x,bin.length.y,t)
+      tmp <- updatepos(x,y,ll.x,ll.y,gamma,g,type,bin.length.x,bin.length.y,t,w.width,w.length)
       x <- tmp[[1]]
       y <- tmp[[2]]
     }
@@ -278,7 +292,7 @@ MCMC_st <- function(time.true,x.true,y.true,label.true,type,w.width,w.length,
   }
 
   
-  return(list(mu.p=mu.p,alpha.p=alpha.p,beta.p=beta.p,gamma.p=gamma.p))
+  return(list(mu.p=mu.p,alpha.p=alpha.p,beta.p=beta.p,gamma.p=gamma.p,lasttime=time,lastlabel=g,lastx=x,lasty=y,ar=ar))
   
 }
 

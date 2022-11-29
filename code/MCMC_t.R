@@ -31,12 +31,10 @@
 
 #Output:
 #   A dataframe containing the posterior samples of all parameters
-
-
 MCMC_t <- function(time.true,label.true,type,
                     seed = 1234,Total_itr=10000,burn = 3000,
-                    q=0.998,use_q=TRUE,updatelabel_ll=0,portion=1,t=200,bin.length=0.1,
-                    mu=rep(1,2),alpha=array(1,c(2,2)),beta=array(1,c(2,2)),
+                    q=0.99998,use_q=TRUE,updatelabel_ll=0,portion=1,t=200,bin.length=0.1,
+                    mu=rep(1,2),alpha=array(1,c(2,2)),beta=array(1,c(2,2)),time_0=c(),label_0=c(),
                     e_beta=array(8,c(2,2)),silent=FALSE,summ_itr=1000, save.latent = FALSE,
                     update.beta=TRUE,update.alpha=TRUE,update.mu=TRUE,update.time=TRUE,update.label=TRUE){
   if(seed!=0){
@@ -53,15 +51,24 @@ MCMC_t <- function(time.true,label.true,type,
   #-------------------------initialization--------------------------------------
   if(update.time==TRUE){
     ll <- agg(time.true,bin.length)
-    time <- generateST(ll,bin.length)
+    time <- time_0
+    
+    if(length(time)==0){
+      time <- generateST(ll,bin.length,c(0,t))
+    }
   }
+  
   if(update.time==FALSE){
     time <- time.true
   }
   
   
   if(update.label==TRUE){
-    g <- initializeg3(time,10)
+    g <- label_0
+    if(length(label_0)==0){
+      g <- initializeg3(time,10)
+    }
+    
   }
   if(update.label==FALSE){
     g <- label.true
@@ -142,9 +149,11 @@ MCMC_t <- function(time.true,label.true,type,
         if(update.beta==TRUE){
           betac <- rtruncnorm(1,mean = beta[j,l], sd = e_beta[j,l], a = 0, b = Inf)
           
+
+          
           # use exp(0.1) as prior
           D3 <- 0.1*(beta[j,l]-betac)+sum(dexp(time[Ojl]-time[g[Ojl]],rate = betac,log = TRUE)-dexp(time[Ojl]-time[g[Ojl]],rate = beta[j,l],log = TRUE))+alpha[j,l]*sum(pexp(t-time[type==j],rate = beta[j,l],log.p = FALSE)-pexp(t-time[type==j],rate = betac,log.p = FALSE))+dtruncnorm(beta[j,l],mean = betac, sd = e_beta[j,l], a = 0, b = Inf)-dtruncnorm(betac,mean = beta[j,l], sd = e_beta[j,l], a = 0, b = Inf)
-          
+      
           u <- runif(1)
           if(log(u) < D3){
             beta[j,l] <- betac
@@ -195,8 +204,8 @@ MCMC_t <- function(time.true,label.true,type,
     
     
     #------------------------------compute acceptance rate----------------------------------------
+    ar <- flag / itr #Acceptance rate
     if(itr %% summ_itr==0){
-      ar <- flag / itr #Acceptance rate
       if (silent==FALSE){
         print(ar)
       }
@@ -216,11 +225,11 @@ MCMC_t <- function(time.true,label.true,type,
     timearr <- array(unlist(timels),c(length(time),itr - burn))
     labelarr <- array(unlist(labells),c(length(time),itr - burn))
     
-    return(list(mu.p=mu.p,alpha.p=alpha.p,beta.p=beta.p,labelarr=labelarr,timearr=timearr))
+    return(list(mu.p=mu.p,alpha.p=alpha.p,beta.p=beta.p,labelarr=labelarr,timearr=timearr,ar=ar))
   }
   
   
-  return(list(mu.p=mu.p,alpha.p=alpha.p,beta.p=beta.p))
+  return(list(mu.p=mu.p,alpha.p=alpha.p,beta.p=beta.p,lasttime=time, lastlabel=g, ar=ar))
   
 }
 

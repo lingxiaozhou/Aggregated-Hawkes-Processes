@@ -1,7 +1,8 @@
 library(coda)
 library(truncnorm)
 
-funcdict <- "/orange/gpapadogeorgou/Lingxiao/Simulation/function/"
+# the full name of the code folder
+funcdict <- "~/Github/Aggregated-Hawkes-Processes/code/"
 
 source(paste0(funcdict,"MCMC_st.R"))
 source(paste0(funcdict,"MCMC_t.R"))

@@ -67,21 +67,25 @@ generateData <- function(mu=c(1,1),alpha=array(c(0.5,0.1,0.2,0.5),dim=c(2,2)),be
   
   df <- df[order(df$HP),]
   HP <- df$HP
-  label <- df$label
+
   x <- df$x
   y <- df$y
   
   
-  for (i in 1: length(label)){
-    if(label[i]>0){
-      label[i] = which(round(HP,12)==round(label[i],12))
-    }
-  }
-  df$label <- label
+
   
   if(remove == TRUE){
     df <-df[df$x<w.length & df$x>0 & df$y<w.width & df$y>0,]
   }
+  
+  label <- df$label
+  for (i in 1: length(label)){
+    if(label[i]>0){
+      tmp <- which(round(df$HP,12)==round(label[i],12))
+      label[i] <- ifelse(length(tmp)==1,tmp,NA)
+    }
+  }
+  df$label <- label
   
   return(df)
 }
