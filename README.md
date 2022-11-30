@@ -9,7 +9,7 @@ This GitHub repository contains the code and results associated with the Section
 * 31_sim.R: code for running one simulation for multiple spatio-temporal case
 * 12_sim.sh, 22_sim.sh, 32_sim.sh: corresponding shell script files
 * setup.txt: shell script for creating folders to store the generated data and results
-* submit.txt: shell sccrip for submit jobs to the cluster
+* submit.txt: shell script for submit jobs to the cluster
 * combineResults.R: read and combine all simulation results
 * simulation_plots.R: reproduce all the figures in section 4
 
