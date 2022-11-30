@@ -1,4 +1,4 @@
-Aggregated Hawkes Processes
+Bayesian Inference for Aggregated Hawkes Processes
 ================
 
 This GitHub repository contains the code and results associated with the Section 4 of the manuscript.
