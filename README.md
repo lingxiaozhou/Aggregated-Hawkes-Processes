@@ -20,7 +20,7 @@ Required packages are:
 * ggplot2 (Version 3.3.6)
 
 
-The code file contains all the untility functions, and the MCMC results for simulations are provided in the result folder.
+The code folder contains all the untility functions, and the MCMC results for simulations are provided in the result folder.
 
 
 ## Instructions for use
