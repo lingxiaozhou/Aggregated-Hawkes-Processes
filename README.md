@@ -25,8 +25,8 @@ The code folder contains all the untility functions, and the MCMC results for si
 
 ## Instructions for use
 
-The provided run simulations for all the scenarios that we considered (21200 simulations in total) and reproduce all the figures in the Section 4 of the manuscript.
-Access to the cluster is required and it takes approximately 5 hours to run one simulations in the most complex scenario. The steps for running the code are as follows:
+The provided code run simulations for all the scenarios that we considered (21200 simulations in total) and reproduce all the figures in the Section 4 of the manuscript.
+Access to the cluster is required, and it takes approximately 5 hours to run one simulations in the most complex scenario. The steps for running the code are as follows:
 
 1.  Download all files, and transfer them to the cluster
 2.  Execute setup.txt to create folders for generated data and MCMC results
