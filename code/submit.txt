@@ -71,8 +71,8 @@ sim=3
 
 
 
-for agg2 in '150'; do
-    for agg1 in '150'; do
+for agg1 in '0' '75' '100'; do
+    for agg2 in '0' '75' '100'; do
         
         echo ${agg1}${agg2}
         sbatch --job-name=3_${agg1}${agg2} --export=agg1=${agg1},agg2=${agg2} --output=Output/${sim}_sims/1_agg${agg1}/2_agg${agg2}/Out_files/output_%a.out 32_sim.sh
