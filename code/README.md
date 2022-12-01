@@ -1,4 +1,4 @@
-This folder contains all necessary files to run all the simulations for three scenarios we considered (temporal process, single spatio_temporal process and multiple spatio-temporal process).  The contents of this folder are as follows:
+This folder contains all utility functions to run all the simulations for three scenarios we considered (temporal process, single spatio_temporal process and multiple spatio-temporal process).  The contents of this folder are as follows:
 
 * aggregation.R: function for aggregating a continous Hawkes process
 * combineMCMC.R: function that combines two MCMC chains
