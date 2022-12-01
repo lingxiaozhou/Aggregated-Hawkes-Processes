@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --account=gpapadogeorgou
-#SBATCH --qos=gpapadogeorgou-b
+#SBATCH --account=
+#SBATCH --qos=
 #SBATCH --mem=6G
 #SBATCH --array=1-400
 #SBATCH --time=24:00:00               # Time limit hrs:min:sec
