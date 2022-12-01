@@ -9,9 +9,6 @@ agg_size2 <- as.numeric(args[2])/100
 index <- as.numeric(args[3])
 
 
-# source("/orange/gpapadogeorgou/Lingxiao/Simulation/function/simulationSource.R")
-# workdic <- "/orange/gpapadogeorgou/Lingxiao/Simulation/"
-
 workdic <- ""     # change if needed
 source(paste0(workdic,"code/simulationSource.R"))
 

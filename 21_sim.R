@@ -11,7 +11,6 @@ index <- as.numeric(args[5])
 
 
 # 
-# workdic <- "/orange/gpapadogeorgou/Lingxiao/Simulation/"
 
 workdic <- ""   # change this if needed
 source(paste0(workdic,"code/simulationSource.R"))

@@ -1,5 +1,4 @@
 
-# workdic <- "~/Github/Aggregated-Hawkes-Processes/"
 workdic <- ""   # change it if needed
 
 

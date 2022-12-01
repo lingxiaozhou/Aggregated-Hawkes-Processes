@@ -11,7 +11,6 @@ index <- as.numeric(args[4])
 beta <- 1
 
 # change the working dictionary if necessary
-# workdic <- "/orange/gpapadogeorgou/Lingxiao/Simulation/"
 workdic <- ""
 
 outname <- paste0(workdic,"Output/",sim,"_sims/mu0",mu*10,"/alpha0",alpha*10,"/beta1/agg",agg_size*100,"/Results/")
